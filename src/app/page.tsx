@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useCompletion } from "@ai-sdk/react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Send } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,7 +73,15 @@ export default function Home() {
               Tailored answers based on your actual resume.
             </p>
           </div>
-          <ResumeViewer />
+          <div className="flex items-center gap-3">
+            <Link href="/cold-message">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Send className="h-4 w-4" />
+                Cold Outreach
+              </Button>
+            </Link>
+            <ResumeViewer />
+          </div>
         </div>
       </header>
 
