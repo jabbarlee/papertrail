@@ -3,5 +3,5 @@ export interface GenerationRequest {
   jobDescription: string;
   question: string;
   tone: 'casual' | 'professional' | 'confident';
+  length: 'short' | 'medium' | 'long';
 }
-

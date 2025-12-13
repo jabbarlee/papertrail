@@ -16,7 +16,7 @@ export function AnswerDisplay({ completion, isLoading }: AnswerDisplayProps) {
 
   const handleCopy = async () => {
     if (!completion) return;
-    
+
     await navigator.clipboard.writeText(completion);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -24,10 +24,13 @@ export function AnswerDisplay({ completion, isLoading }: AnswerDisplayProps) {
 
   if (isLoading) {
     return (
-      <Card className="bg-slate-100">
-        <CardContent className="p-6 space-y-3">
+      <Card className="bg-slate-100 min-h-[400px]">
+        <CardContent className="p-6 space-y-4">
           <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-[95%]" />
           <Skeleton className="h-4 w-[90%]" />
+          <Skeleton className="h-4 w-[85%]" />
+          <Skeleton className="h-4 w-[92%]" />
           <Skeleton className="h-4 w-[75%]" />
         </CardContent>
       </Card>
@@ -39,11 +42,11 @@ export function AnswerDisplay({ completion, isLoading }: AnswerDisplayProps) {
   }
 
   return (
-    <Card className="bg-slate-100 relative">
+    <Card className="bg-slate-100 relative min-h-[400px]">
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-3 right-3 h-8 w-8"
+        className="absolute top-3 right-3 h-8 w-8 hover:bg-slate-200"
         onClick={handleCopy}
       >
         {copied ? (
@@ -54,11 +57,10 @@ export function AnswerDisplay({ completion, isLoading }: AnswerDisplayProps) {
         <span className="sr-only">Copy to clipboard</span>
       </Button>
       <CardContent className="p-6 pr-12">
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">
+        <p className="font-[family-name:var(--font-serif)] italic text-[17px] leading-[1.8] whitespace-pre-wrap text-slate-700">
           {completion}
         </p>
       </CardContent>
     </Card>
   );
 }
-

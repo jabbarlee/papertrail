@@ -15,18 +15,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 
 import { ResumeViewer } from "@/components/resume-viewer";
 import { AnswerDisplay } from "@/components/answer-display";
 
 type Tone = "professional" | "casual" | "confident";
+type Length = "short" | "medium" | "long";
+
+const BOILERPLATE_ANSWER = `I'm genuinely excited about the opportunity to join your team as a Software Engineering Intern. What draws me most to this role is the chance to work on products that impact millions of users while learning from world-class engineers.
+
+During my time building FocusBee, I architected a real-time synchronization system using WebSockets that enabled instant cross-device session pairing with under 50ms latency. This experience taught me the importance of building scalable, user-centric solutions—values I see reflected in your engineering culture.
+
+I'm particularly interested in your team's approach to developer experience and infrastructure. Having optimized PostgreSQL queries to reduce API response times by 40%, I understand the impact that thoughtful backend decisions have on product quality.
+
+Beyond technical skills, I bring a collaborative mindset shaped by leading the Dialogue Student Association and mentoring students at Horizon Leadership Academy. I believe great software is built by teams that communicate well and support each other's growth.
+
+I'm eager to contribute, learn, and grow with your team.`;
 
 export default function Home() {
   const [companyName, setCompanyName] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [question, setQuestion] = useState("");
   const [tone, setTone] = useState<Tone>("professional");
+  const [length, setLength] = useState<Length>("medium");
 
   const { complete, completion, isLoading } = useCompletion({
     api: "/api/generate",
@@ -41,6 +52,7 @@ export default function Home() {
         jobDescription,
         question,
         tone,
+        length,
       },
     });
   };
@@ -67,7 +79,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="container mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Inputs */}
+          {/* Left Column - All Inputs */}
           <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="company" className="text-base font-medium">
@@ -91,32 +103,52 @@ export default function Home() {
                 placeholder="Paste the full job description here..."
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
-                className="min-h-[280px] bg-white resize-none"
+                className="min-h-[180px] bg-white resize-y"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="tone" className="text-base font-medium">
-                Tone
-              </Label>
-              <Select
-                value={tone}
-                onValueChange={(value: Tone) => setTone(value)}
-              >
-                <SelectTrigger id="tone" className="bg-white">
-                  <SelectValue placeholder="Select a tone" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="professional">💼 Professional</SelectItem>
-                  <SelectItem value="casual">😊 Casual</SelectItem>
-                  <SelectItem value="confident">💪 Confident</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="tone" className="text-base font-medium">
+                  Tone
+                </Label>
+                <Select
+                  value={tone}
+                  onValueChange={(value: Tone) => setTone(value)}
+                >
+                  <SelectTrigger id="tone" className="bg-white">
+                    <SelectValue placeholder="Select a tone" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="professional">
+                      💼 Professional
+                    </SelectItem>
+                    <SelectItem value="casual">😊 Casual</SelectItem>
+                    <SelectItem value="confident">💪 Confident</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Right Column - Question & Output */}
-          <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="length" className="text-base font-medium">
+                  Length
+                </Label>
+                <Select
+                  value={length}
+                  onValueChange={(value: Length) => setLength(value)}
+                >
+                  <SelectTrigger id="length" className="bg-white">
+                    <SelectValue placeholder="Select length" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="short">📝 Short</SelectItem>
+                    <SelectItem value="medium">📄 Medium</SelectItem>
+                    <SelectItem value="long">📜 Long</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="question" className="text-base font-medium">
                 The Question
@@ -126,7 +158,7 @@ export default function Home() {
                 placeholder='e.g., "Why do you want to work here?", "Tell me about yourself", "Describe a challenging project..."'
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                className="min-h-[140px] bg-white resize-none"
+                className="min-h-[100px] bg-white resize-y"
               />
             </div>
 
@@ -139,23 +171,18 @@ export default function Home() {
               <Sparkles className="h-5 w-5" />
               {isLoading ? "Generating..." : "Generate Answer"}
             </Button>
+          </div>
 
-            <Separator />
+          {/* Right Column - Answer Only */}
+          <div className="space-y-3">
+            <Label className="text-base font-medium text-muted-foreground">
+              Generated Answer
+            </Label>
 
-            <div className="space-y-2">
-              <Label className="text-base font-medium text-muted-foreground">
-                Generated Answer
-              </Label>
-              <AnswerDisplay completion={completion} isLoading={isLoading} />
-
-              {!completion && !isLoading && (
-                <div className="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center">
-                  <p className="text-muted-foreground text-sm">
-                    Your personalized answer will appear here...
-                  </p>
-                </div>
-              )}
-            </div>
+            <AnswerDisplay
+              completion={completion || BOILERPLATE_ANSWER}
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </main>
