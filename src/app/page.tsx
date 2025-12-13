@@ -17,7 +17,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { ResumeViewer } from "@/components/resume-viewer";
 import { AnswerDisplay } from "@/components/answer-display";
 
 type Tone = "professional" | "casual" | "confident";
@@ -73,15 +72,12 @@ export default function Home() {
               Tailored answers based on your actual resume.
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/cold-message">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Send className="h-4 w-4" />
-                Cold Outreach
-              </Button>
-            </Link>
-            <ResumeViewer />
-          </div>
+          <Link href="/cold-message">
+            <Button variant="outline" size="sm" className="gap-2">
+              <Send className="h-4 w-4" />
+              Cold Outreach
+            </Button>
+          </Link>
         </div>
       </header>
 

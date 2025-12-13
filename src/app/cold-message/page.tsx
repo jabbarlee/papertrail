@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
-import { ResumeViewer } from "@/components/resume-viewer";
 import { AnswerDisplay } from "@/components/answer-display";
 
 type Tone = "friendly" | "professional" | "enthusiastic";
@@ -84,15 +83,12 @@ export default function ColdMessagePage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/">
-              <Button variant="outline" size="sm" className="gap-2">
-                <MessageCircle className="h-4 w-4" />
-                Application Answers
-              </Button>
-            </Link>
-            <ResumeViewer />
-          </div>
+          <Link href="/">
+            <Button variant="outline" size="sm" className="gap-2">
+              <MessageCircle className="h-4 w-4" />
+              Application Answers
+            </Button>
+          </Link>
         </div>
       </header>
 
