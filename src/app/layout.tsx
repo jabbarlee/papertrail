@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter, Lora } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -8,8 +8,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const sourceSerif = Source_Serif_4({
-  variable: "--font-serif",
+const lora = Lora({
+  variable: "--font-display",
   subsets: ["latin"],
   style: ["normal", "italic"],
 });
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${sourceSerif.variable} font-sans antialiased bg-slate-50 min-h-screen`}>
+      <body className={`${inter.variable} ${lora.variable} font-sans antialiased min-h-screen`}>
         {children}
         <Toaster />
       </body>

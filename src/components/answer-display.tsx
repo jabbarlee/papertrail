@@ -57,7 +57,7 @@ export function AnswerDisplay({ completion, isLoading }: AnswerDisplayProps) {
         <span className="sr-only">Copy to clipboard</span>
       </Button>
       <CardContent className="p-6 pr-12">
-        <p className="font-[family-name:var(--font-serif)] italic text-[17px] leading-[1.8] whitespace-pre-wrap text-slate-700">
+        <p className="font-[family-name:var(--font-display)] text-[16px] leading-[1.85] whitespace-pre-wrap text-slate-700">
           {completion}
         </p>
       </CardContent>
