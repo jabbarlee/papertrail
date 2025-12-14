@@ -23,17 +23,6 @@ import { AnswerDisplay } from "@/components/answer-display";
 type Tone = "friendly" | "professional" | "enthusiastic";
 type Goal = "referral" | "coffee-chat" | "advice" | "opportunity";
 
-const BOILERPLATE_MESSAGE = `Hi Sarah! I came across your profile while researching engineers at Stripe and was really impressed by your work on the payments infrastructure team.
-
-I'm a CS student at North American University, and I recently built FocusBee—a real-time productivity app using WebSockets and PostgreSQL. Your experience scaling distributed systems is exactly the kind of work I'm excited about.
-
-I'd love to hear about your journey at Stripe and any advice you might have for someone breaking into fintech. Would you be open to a quick 15-minute chat?
-
-Thanks so much for your time!
-
-Best,
-Amil`;
-
 export default function ColdMessagePage() {
   const [companyName, setCompanyName] = useState("");
   const [personName, setPersonName] = useState("");
@@ -44,6 +33,7 @@ export default function ColdMessagePage() {
 
   const { complete, completion, isLoading } = useCompletion({
     api: "/api/cold-message",
+    streamProtocol: "text",
   });
 
   const handleGenerate = async () => {
@@ -146,14 +136,16 @@ export default function ColdMessagePage() {
                   value={goal}
                   onValueChange={(value: Goal) => setGoal(value)}
                 >
-                  <SelectTrigger id="goal" className="bg-white">
+                  <SelectTrigger id="opportunity" className="bg-white">
                     <SelectValue placeholder="Select goal" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="coffee-chat">☕ Coffee Chat</SelectItem>
                     <SelectItem value="referral">🎯 Get a Referral</SelectItem>
                     <SelectItem value="advice">💡 Ask for Advice</SelectItem>
-                    <SelectItem value="opportunity">🚀 Explore Opportunity</SelectItem>
+                    <SelectItem value="opportunity">
+                      🚀 Explore Opportunity
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -171,8 +163,12 @@ export default function ColdMessagePage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="friendly">😊 Friendly</SelectItem>
-                    <SelectItem value="professional">💼 Professional</SelectItem>
-                    <SelectItem value="enthusiastic">🔥 Enthusiastic</SelectItem>
+                    <SelectItem value="professional">
+                      💼 Professional
+                    </SelectItem>
+                    <SelectItem value="enthusiastic">
+                      🔥 Enthusiastic
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -181,7 +177,9 @@ export default function ColdMessagePage() {
             <div className="space-y-2">
               <Label htmlFor="context" className="text-base font-medium">
                 Additional Context{" "}
-                <span className="text-muted-foreground font-normal">(optional)</span>
+                <span className="text-muted-foreground font-normal">
+                  (optional)
+                </span>
               </Label>
               <Textarea
                 id="context"
@@ -218,14 +216,10 @@ export default function ColdMessagePage() {
               </Badge>
             </div>
 
-            <AnswerDisplay
-              completion={completion || BOILERPLATE_MESSAGE}
-              isLoading={isLoading}
-            />
+            <AnswerDisplay completion={completion} isLoading={isLoading} />
           </div>
         </div>
       </main>
     </div>
   );
 }
-

@@ -22,16 +22,6 @@ import { AnswerDisplay } from "@/components/answer-display";
 type Tone = "professional" | "casual" | "confident";
 type Length = "short" | "medium" | "long";
 
-const BOILERPLATE_ANSWER = `I'm genuinely excited about the opportunity to join your team as a Software Engineering Intern. What draws me most to this role is the chance to work on products that impact millions of users while learning from world-class engineers.
-
-During my time building FocusBee, I architected a real-time synchronization system using WebSockets that enabled instant cross-device session pairing with under 50ms latency. This experience taught me the importance of building scalable, user-centric solutions—values I see reflected in your engineering culture.
-
-I'm particularly interested in your team's approach to developer experience and infrastructure. Having optimized PostgreSQL queries to reduce API response times by 40%, I understand the impact that thoughtful backend decisions have on product quality.
-
-Beyond technical skills, I bring a collaborative mindset shaped by leading the Dialogue Student Association and mentoring students at Horizon Leadership Academy. I believe great software is built by teams that communicate well and support each other's growth.
-
-I'm eager to contribute, learn, and grow with your team.`;
-
 export default function Home() {
   const [companyName, setCompanyName] = useState("");
   const [jobDescription, setJobDescription] = useState("");
@@ -41,6 +31,7 @@ export default function Home() {
 
   const { complete, completion, isLoading } = useCompletion({
     api: "/api/generate",
+    streamProtocol: "text",
   });
 
   const handleGenerate = async () => {
@@ -184,10 +175,7 @@ export default function Home() {
               Generated Answer
             </Label>
 
-            <AnswerDisplay
-              completion={completion || BOILERPLATE_ANSWER}
-              isLoading={isLoading}
-            />
+            <AnswerDisplay completion={completion} isLoading={isLoading} />
           </div>
         </div>
       </main>
